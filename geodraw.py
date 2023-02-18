@@ -12,7 +12,6 @@ def geoDrawNetwork(
     edges_jk_color="orange",
     node_color="red",
     self_loop_shift=350000,
-    font_size=6,
 ):
     m = Basemap(
         projection="merc",
@@ -43,7 +42,6 @@ def geoDrawNetwork(
         G,
         positions_xy,
         node_color=node_color,
-        font_size=font_size,
         edge_color=nx.get_edge_attributes(G, "color").values(),
     )
 
@@ -61,7 +59,6 @@ def geoDrawNetwork(
             bbox=dict(fc=nx.get_edge_attributes(G, "color")[e], ec="none", pad=1),
             verticalalignment="top",
             rotate=False,
-            font_size=font_size,
         )
 
     m.bluemarble()
@@ -76,7 +73,6 @@ def geoBrazilUFDrawNetwork(
     edges_jk_color="orange",
     node_color="red",
     self_loop_shift=350000,
-    font_size=6,
 ):
     locations = {
         "AC": (-8.77, -70.55),
@@ -115,5 +111,4 @@ def geoBrazilUFDrawNetwork(
         edges_jk_color=edges_jk_color,
         node_color=node_color,
         self_loop_shift=self_loop_shift,
-        font_size=font_size,
     )
