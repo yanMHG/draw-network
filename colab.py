@@ -1,5 +1,13 @@
 import matplotlib.pyplot as plt
 
 
-def setup(dpi=100):
-    plt.rcParams["figure.dpi"] = dpi
+class ColabContext:
+    def __init__(self, dpi=100):
+        self.dpi = dpi
+
+    def __enter__(self):
+        self.plt_context = plt.rc_context({"figure.dpi": self.dpi})
+        self.plt_context.__enter__()
+
+    def __exit__(self, type, value, traceback):
+        pass
