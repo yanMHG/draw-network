@@ -42,6 +42,7 @@ def geoDrawNetwork(
         G,
         positions_xy,
         node_color=node_color,
+        font_size=plt.rcParams["font.size"],
         edge_color=nx.get_edge_attributes(G, "color").values(),
     )
 
@@ -59,6 +60,7 @@ def geoDrawNetwork(
             bbox=dict(fc=nx.get_edge_attributes(G, "color")[e], ec="none", pad=1),
             verticalalignment="top",
             rotate=False,
+            font_size=plt.rcParams["font.size"],
         )
 
     m.bluemarble()
