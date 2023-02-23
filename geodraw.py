@@ -1,16 +1,18 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap as Basemap
+
+from pcolors import azul_cinza, azul_claro, azul_escuro, cinza, verde_lime
 
 
 def geoDrawNetwork(
     locations,  # dict node -> (lat, lon)
     edges_ij,  # dict (node_i, node_j) -> value
     edges_jk,  # dict (node_j, node_k) -> value
-    edges_ij_color="gray",
-    edges_jk_color="orange",
-    node_color="red",
+    edges_ij_color=verde_lime,
+    edges_jk_color=azul_claro,
+    node_color=azul_escuro,
+    node_font_color="white",
     self_loop_shift=350000,
 ):
     m = Basemap(
@@ -20,9 +22,14 @@ def geoDrawNetwork(
         urcrnrlon=max([v[1] for v in locations.values()]) + 1,
         urcrnrlat=max([v[0] for v in locations.values()]) + 1,
         lat_ts=0,
-        resolution="i",
+        resolution="l",
         suppress_ticks=True,
     )
+
+    m.fillcontinents(color="white")
+    m.drawcoastlines(zorder=-100)
+    m.drawcountries()
+    m.drawlsmask(ocean_color=cinza, alpha=0.4, zorder=-101)
 
     # convert lat/lon to xy
     lons_xy_vals, lats_xy_vals = m(
@@ -43,6 +50,7 @@ def geoDrawNetwork(
         positions_xy,
         node_color=node_color,
         font_size=plt.rcParams["font.size"],
+        font_color=node_font_color,
         edge_color=nx.get_edge_attributes(G, "color").values(),
     )
 
@@ -63,17 +71,16 @@ def geoDrawNetwork(
             font_size=plt.rcParams["font.size"],
         )
 
-    m.bluemarble()
-    m.drawcountries()
     plt.show()
 
 
 def geoBrazilUFDrawNetwork(
     edges_ij,  # dict (node_i, node_j) -> value
     edges_jk,  # dict (node_j, node_k) -> value
-    edges_ij_color="gray",
-    edges_jk_color="orange",
-    node_color="red",
+    edges_ij_color=verde_lime,
+    edges_jk_color=azul_claro,
+    node_color=azul_escuro,
+    node_font_color="white",
     self_loop_shift=350000,
 ):
     locations = {
@@ -112,5 +119,6 @@ def geoBrazilUFDrawNetwork(
         edges_ij_color=edges_ij_color,
         edges_jk_color=edges_jk_color,
         node_color=node_color,
+        node_font_color=node_font_color,
         self_loop_shift=self_loop_shift,
     )
