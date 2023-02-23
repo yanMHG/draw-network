@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from mpl_toolkits.basemap import Basemap as Basemap
 
-from pcolors import azul_cinza, azul_claro, azul_escuro, cinza, verde_lime
+from .pcolors import azul_cinza, azul_claro, azul_escuro, cinza, verde_lime
 
 
 def geoDrawNetwork(
