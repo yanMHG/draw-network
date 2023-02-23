@@ -41,9 +41,11 @@ def geoDrawNetwork(
 
     G = nx.DiGraph()
     for (node_i, node_j), value in edges_ij.items():
-        G.add_edge(node_i, node_j, flow=value, color=edges_ij_color)
+        if value > 0:
+            G.add_edge(node_i, node_j, flow=value, color=edges_ij_color)
     for (node_j, node_k), value in edges_jk.items():
-        G.add_edge(node_j, node_k, flow=value, color=edges_jk_color)
+        if value > 0:
+            G.add_edge(node_j, node_k, flow=value, color=edges_jk_color)
 
     nx.draw_networkx(
         G,
