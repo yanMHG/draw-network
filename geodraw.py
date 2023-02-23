@@ -11,6 +11,8 @@ def geoDrawNetwork(
     edges_jk,  # dict (node_j, node_k) -> value
     edges_ij_color=verde_lime,
     edges_jk_color=azul_claro,
+    edges_ij_format="",
+    edges_jk_format="",
     node_color=azul_escuro,
     node_font_color="white",
     self_loop_shift=350000,
@@ -39,13 +41,17 @@ def geoDrawNetwork(
     lons_xy = {k: lons_xy_vals[i] for i, k in enumerate(locations.keys())}
     positions_xy = {k: (lons_xy[k], lats_xy[k]) for k in locations.keys()}
 
-    G = nx.DiGraph()
+    G = nx.MultiDiGraph()
     for (node_i, node_j), value in edges_ij.items():
         if value > 0:
-            G.add_edge(node_i, node_j, flow=value, color=edges_ij_color)
+            G.add_edge(
+                node_i, node_j, flow=f"{value:{edges_ij_format}}", color=edges_ij_color
+            )
     for (node_j, node_k), value in edges_jk.items():
         if value > 0:
-            G.add_edge(node_j, node_k, flow=value, color=edges_jk_color)
+            G.add_edge(
+                node_j, node_k, flow=f"{value:{edges_jk_format}}", color=edges_jk_color
+            )
 
     nx.draw_networkx(
         G,
@@ -56,7 +62,7 @@ def geoDrawNetwork(
         edge_color=nx.get_edge_attributes(G, "color").values(),
     )
 
-    for e in G.edges():
+    for e, _e in zip(G.edges(), G.edges):
         if e[0] != e[1]:
             positions = positions_xy
         else:
@@ -66,8 +72,8 @@ def geoDrawNetwork(
         nx.draw_networkx_edge_labels(
             G,
             positions,
-            edge_labels={e: nx.get_edge_attributes(G, "flow")[e]},
-            bbox=dict(fc=nx.get_edge_attributes(G, "color")[e], ec="none", pad=1),
+            edge_labels={e: nx.get_edge_attributes(G, "flow")[_e]},
+            bbox=dict(fc=nx.get_edge_attributes(G, "color")[_e], ec="none", pad=1),
             verticalalignment="top",
             rotate=False,
             font_size=plt.rcParams["font.size"],
@@ -81,6 +87,8 @@ def geoBrazilUFDrawNetwork(
     edges_jk,  # dict (node_j, node_k) -> value
     edges_ij_color=verde_lime,
     edges_jk_color=azul_claro,
+    edges_ij_format="",
+    edges_jk_format="",
     node_color=azul_escuro,
     node_font_color="white",
     self_loop_shift=350000,
@@ -120,6 +128,8 @@ def geoBrazilUFDrawNetwork(
         edges_jk,
         edges_ij_color=edges_ij_color,
         edges_jk_color=edges_jk_color,
+        edges_ij_format=edges_ij_format,
+        edges_jk_format=edges_jk_format,
         node_color=node_color,
         node_font_color=node_font_color,
         self_loop_shift=self_loop_shift,
