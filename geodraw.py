@@ -50,7 +50,7 @@ def geoDrawNetwork(
     nx.draw_networkx(
         G,
         positions_xy,
-        node_color=node_color,
+        node_color=[node_color],
         font_size=plt.rcParams["font.size"],
         font_color=node_font_color,
         edge_color=nx.get_edge_attributes(G, "color").values(),
